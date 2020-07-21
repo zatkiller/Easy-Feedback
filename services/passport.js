@@ -24,21 +24,17 @@ passport.use(
 			callbackURL: "/auth/google/callback", //relative path causes http address
 			proxy: true,
 		},
-		(accessToken, refreshToken, profile, done) => {
-			User.findOne({ googleId: profile.id }) //Query to check if user already exists, query returns a promise
-				.then((existingUser) => {
-					if (existingUser) {
-						// Record exists
-						done(null, existingUser);
-					} else {
-						//New user, no record of user
-						new User({
-							googleId: profile.id,
-						})
-							.save()
-							.then((user) => done(null, user));
-					}
-				});
+		async (accessToken, refreshToken, profile, done) => {
+			const existingUser = await User.findOne({ googleId: profile.id }); //Query to check if user already exists, query returns a promise
+
+			if (existingUser) {
+				// Record exists
+				return done(null, existingUser);
+			}
+
+			//New user, no record of user
+			const user = await new User({ googleId: profile.id }).save();
+			done(null, user);
 			//done used when finished
 		}
 	)

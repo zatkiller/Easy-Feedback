@@ -1,1 +1,1 @@
-Feedback collection web app backend
+Feedback collection fullstack web app.
