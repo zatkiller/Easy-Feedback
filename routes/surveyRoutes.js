@@ -11,6 +11,17 @@ const { URL } = require('url');
 const Survey = mongoose.model("surveys");
 
 module.exports = (app) => {
+
+	app.get('/api/surveys', requireLogin, async (req, res) => {
+		const surveys = await Survey.find({ _user: req.user.id }).select({
+			//mongoose is select selects which filed / projection to include or exclude
+			//exclude recipient property when pull list or survey
+			recipients: false
+		});
+
+		res.send(surveys);
+	});
+
 	app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
 		const { title, subject, body, recipients } = req.body;
 
