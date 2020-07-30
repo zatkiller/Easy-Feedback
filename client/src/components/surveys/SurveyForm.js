@@ -44,7 +44,7 @@ function validate(values) {
     const errors = {};
 
     //check for Invalid emails first
-    errors.emails = validateEmails(values.emails || ''); //'' to handle when component first mounts but is empty
+    errors.recipients = validateEmails(values.recipients || ''); //'' to handle when component first mounts but is empty
 
     //No provide a value then override the error message
     _.each(formFields, ({ name }) => {
