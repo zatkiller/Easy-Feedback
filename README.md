@@ -1,4 +1,6 @@
-Easy feedback collection fullstack app.
+### Easy Feedback collection
+
+Full-stack web app
 
 Built using: MongoDB, Express, React and Node
 
